@@ -1,0 +1,43 @@
+  // Replace with your Google Sheet's export CSV URL
+        // Get the spreadsheet ID from the edit URL (e.g., https://docs.google.com/spreadsheets/d/YOUR_ID/edit)
+        // Then use: https://docs.google.com/spreadsheets/d/YOUR_ID/export?format=csv&gid=0
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1RwtkcGSaMuyU9qNgUYW9XqnUH7NShWy5NsekvXO2WHQ/export?format=csv&gid=0';
+
+        fetch(sheetUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Fetched data:', data); // Debug: log the raw data
+                const rows = data.split('\n').slice(1); // Skip header
+                const playersDiv = document.getElementById('players');
+                rows.forEach(row => {
+                    const cols = row.split(',');
+                    if (cols.length >= 1 && cols[0].trim()) { // At least name
+                        const name = cols[0] || 'Unknown';
+                        const grade = cols[1] || '';
+                        const position = cols[2] || '';
+                        const offers = cols[3] ? `<p>Offers: ${cols[3]}</p>` : '';
+                        const stats = cols[4] || '';
+                        const highlights = cols[5] ? `<p>Highlights: ${cols[5]}</p>` : '';
+                        const bio = cols[6] ? `<p>${cols[6]}</p>` : '';
+
+                        const card = document.createElement('div');
+                        card.className = 'player-card';
+                        card.innerHTML = `
+                            <h3>${name}</h3>
+                            <h5>${grade}</h5>
+                            <p>Position: ${position}</p>
+                            ${offers}
+                            <p>Stats: ${stats}</p>
+                            ${highlights}
+                            ${bio}
+                        `;
+                        playersDiv.appendChild(card);
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching sheet:', error));
