@@ -20,12 +20,20 @@
     <div id="players"></div>
 
     <script>
-        // Replace with your published Google Sheet CSV URL
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSIEzgNvuHq-36u3nrpq2-DxBp32vRS3g0LLIr73WbpSKFiBu5xd01e-GUMQIOlECASOOyWBojdjuDT/pub?gid=0&single=true&output=csv';
+        // Replace with your Google Sheet's export CSV URL
+        // Get the spreadsheet ID from the edit URL (e.g., https://docs.google.com/spreadsheets/d/YOUR_ID/edit)
+        // Then use: https://docs.google.com/spreadsheets/d/YOUR_ID/export?format=csv&gid=0
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1RwtkcGSaMuyU9qNgUYW9XqnUH7NShWy5NsekvXO2WHQ/export?format=csv&gid=0';
 
         fetch(sheetUrl)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
             .then(data => {
+                console.log('Fetched data:', data); // Debug: log the raw data
                 const rows = data.split('\n').slice(1); // Skip header
                 const playersDiv = document.getElementById('players');
                 rows.forEach(row => {
