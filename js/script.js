@@ -21,10 +21,10 @@
                                 const L_Name = row[0] || 'Unknown';
                                 const F_Name = row[1] || '';
                                 const position = row[2] || '';
-                                const offers = row[3] ? `<p>Offers: ${row[3]}</p>` : '';
-                                const stats = row[4] || '';
-                                const highlights = row[5] ? `<p>Highlights: ${row[5]}</p>` : '';
-                                const bio = row[6] ? `<p>${row[6]}</p>` : '';
+                                const offers = row[3] || '';
+                                const hudl = row[4] || '';
+                                const imageURL = row[5] || '';
+                                const bio = row[6] || '';
 
                                 const card = document.createElement('div');
                                 card.className = 'player-card';
@@ -32,10 +32,10 @@
                                     <h3>${L_Name}</h3>
                                     <h5>${F_Name}</h5>
                                     <p>Position: ${position}</p>
-                                    ${offers}
-                                    <p>Stats: ${stats}</p>
-                                    ${highlights}
-                                    ${bio}
+                                    <p>Offers: ${offers}
+                                    <p>Hudl: ${hudl}</p>
+                                    ${imageURL}
+                                    <p>Bio: ${bio}</p>
                                 `;
                                 playersDiv.appendChild(card);
                             }
