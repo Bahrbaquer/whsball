@@ -29,13 +29,13 @@
                                 const card = document.createElement('div');
                                 card.className = 'player-card';
                                 card.innerHTML = `
-                                    <h3>${L_Name}</h3>
-                                    <h5>${F_Name}</h5>
-                                    <p>Position: ${position}</p>
-                                    <p>Offers: ${offers}
-                                    <p>Hudl: ${hudl}</p>
-                                    ${imageURL}
-                                    <p>Bio: ${bio}</p>
+                                    <h3 class="lName">${L_Name}</h3>
+                                    <h5 class=fName>${F_Name}</h5>
+                                    <p class="position">Position: ${position}</p>
+                                    <p class="offers">Offers: ${offers}
+                                    <p class="hudl">Hudl: ${hudl}</p>
+                                    <img class="playerBioImage" src="images/playerImages/${imageURL}">
+                                    <p class="bio">Bio: ${bio}</p>
                                 `;
                                 playersDiv.appendChild(card);
                             }
