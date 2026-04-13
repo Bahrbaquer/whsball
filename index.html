@@ -21,7 +21,7 @@
 
     <script>
         // Replace with your published Google Sheet CSV URL
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=YOUR_GID';
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSIEzgNvuHq-36u3nrpq2-DxBp32vRS3g0LLIr73WbpSKFiBu5xd01e-GUMQIOlECASOOyWBojdjuDT/pub?gid=0&single=true&output=csv';
 
         fetch(sheetUrl)
             .then(response => response.text())
@@ -35,8 +35,11 @@
                         card.className = 'player-card';
                         card.innerHTML = `
                             <h3>${cols[0]}</h3>
-                            <p>Position: ${cols[1]}</p>
-                            <p>Stats: ${cols[2]}</p>
+                            <h5>${cols[1]}</h5>
+                            <p>Position: ${cols[2]}</p>
+                            <p>Offers: ${cols[3]}</p>
+                            <p>Highlights: ${cols[5]}</p>
+                            <p>${cols[6]}</p>
                         `;
                         playersDiv.appendChild(card);
                     }
