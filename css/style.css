@@ -26,8 +26,11 @@
     position:relative;
     background: #e0e0e0;
     border-radius: 1rem;
-    box-shadow: 0px 0px .75rem #000000a6;
     user-select: none;
+     box-shadow: 0px 0px .75rem #00000000;
+}
+.player-card:hover{
+     box-shadow: 0px 0px .75rem #000000a6;
 }
 .player-card p {
     text-transform: capitalize;
