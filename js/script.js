@@ -14,6 +14,40 @@
                     complete: function(results) {
                         const rows = results.data.slice(1); // Skip header row
                         const playersDiv = document.getElementById('players');
+                        
+                        // Extract unique grad years and sort them
+                        const gradYears = [...new Set(rows.map(row => row[8]).filter(year => year && year.trim()))].sort();
+                        
+                        // Create filter dropdown
+                        const filterContainer = document.createElement('div');
+                        filterContainer.style.cssText = 'text-align: center; margin-bottom: 2rem;';
+                        
+                        const label = document.createElement('label');
+                        label.textContent = 'Filter by Grad Year: ';
+                        label.style.cssText = 'margin-right: 0.5rem; font-weight: bold;';
+                        
+                        const select = document.createElement('select');
+                        select.id = 'gradYearFilter';
+                        select.style.cssText = 'padding: 0.5rem; font-size: 1rem; cursor: pointer;';
+                        
+                        const allOption = document.createElement('option');
+                        allOption.value = 'all';
+                        allOption.textContent = 'Show All';
+                        select.appendChild(allOption);
+                        
+                        gradYears.forEach(year => {
+                            const option = document.createElement('option');
+                            option.value = year;
+                            option.textContent = `Class of ${year}`;
+                            select.appendChild(option);
+                        });
+                        
+                        filterContainer.appendChild(label);
+                        filterContainer.appendChild(select);
+                        playersDiv.parentNode.insertBefore(filterContainer, playersDiv);
+                        
+                        // Store card references for filtering
+                        const cardMap = new Map();
                         rows.forEach(row => {
                             if (row.length >= 1 && row[0] && row[0].trim()) { // At least name
                                 const L_Name = row[0] || 'Unknown';
@@ -77,8 +111,9 @@
                                         </div>
                                     </div>
                                 `;
-                                playersDiv.appendChild(card);
-
+                                playersDiv.appendChild(card);                                
+                                // Store card with its grad year for filtering
+                                cardMap.set(card, gradYear);
                                 const viewProfileButton = card.querySelector('.viewProfileButton');
                                 const backButton = card.querySelector('.backButton');
 
@@ -90,6 +125,19 @@
                                     card.classList.remove('flipped');
                                 });
                             }
+                        });
+                        
+                        // Add filter event listener
+                        const filterSelect = document.getElementById('gradYearFilter');
+                        filterSelect.addEventListener('change', (e) => {
+                            const selectedYear = e.target.value;
+                            cardMap.forEach((year, card) => {
+                                if (selectedYear === 'all' || year === selectedYear) {
+                                    card.style.display = '';
+                                } else {
+                                    card.style.display = 'none';
+                                }
+                            });
                         });
                     },
                     error: function(error) {
